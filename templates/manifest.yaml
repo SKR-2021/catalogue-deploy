@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue
+  namespace: dotmart
+data:
+  MONGO: "true"
+  MONGO_URL: {{ .Values.deployment.mongoURL }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  namespace: dotmart
+  # these are replica set labels 
+  labels: 
+    project: dotmart
+    component: catalogue
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+  # these labels are used to select pods
+    matchLabels:
+      project: dotmart
+      component: catalogue
+      tier: backend
+  # pod defination 
+  template:
+    metadata:
+      labels:
+        project: dotmart
+        component: catalogue
+        tier: backend
+    spec:
+      containers:
+      - name: catalogue
+        image: {{ .Values.deployment.imageRepo }}:{{ .Values.deployment.imageVersion }}
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: catalogue
+        ports:
+        - name: liveness-port
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: liveness-port
+          failureThreshold: 1
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: liveness-port
+          failureThreshold: 1
+          periodSeconds: 15
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+spec:
+  selector:
+    project: dotmart
+    component: catalogue
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.servicePort }}
+      targetPort: 8080 # container port 

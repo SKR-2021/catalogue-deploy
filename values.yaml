@@ -1,0 +1,8 @@
+deployment:
+  imageRepo: karunakar2000/catalogue
+  imageVersion: v3
+service:
+  servicePort: 8080 
+
+
+  
