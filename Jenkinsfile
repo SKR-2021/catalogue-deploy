@@ -3,7 +3,7 @@
 properties([
   parameters([
     string(name: 'appVersion', defaultValue: ''),
-    string(name: 'appVersion', defaultValue: 'dev')
+    string(name: 'deploy_to', defaultValue: 'dev')
   ])
 ])
 
@@ -14,5 +14,5 @@ def configMap = [
     deploy_to: (params.deploy_to)
 ]
 
-
 EKSDeploy(configMap)
+
