@@ -1,6 +1,6 @@
 deployment:
-  imageRepo: karunakar2000/catalogue
-  imageVersion: v3
+  imageRepo: 668918190203.dkr.ecr.us-east-1.amazonaws.com/dotmart/catalogue
+  imageVersion: IMAGE_VERSION
 service:
   servicePort: 8080 
 
