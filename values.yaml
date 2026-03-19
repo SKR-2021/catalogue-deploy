@@ -3,6 +3,3 @@ deployment:
   imageVersion: IMAGE_VERSION
 service:
   servicePort: 8080 
-
-
-  
