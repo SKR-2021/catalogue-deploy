@@ -5,7 +5,7 @@ metadata:
   namespace: dotmart
 data:
   MONGO: "true"
-  MONGO_URL: {{ .Values.deployment.mongoURL }}
+  MONGO_URL: "{{ .Values.configmap.mongoURL }}"
 ---
 apiVersion: apps/v1
 kind: Deployment
