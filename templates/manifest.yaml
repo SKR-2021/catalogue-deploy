@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: catalogue
-  namespace: dotmart
+  namespace: roboshop
 data:
   MONGO: "true"
   MONGO_URL: {{ .Values.configmap.mongoURL }}
@@ -11,10 +11,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalogue
-  namespace: dotmart
+  namespace: roboshop
   # these are replica set labels 
   labels: 
-    project: dotmart
+    project: roboshop
     component: catalogue
     tier: backend
 spec:
@@ -22,14 +22,14 @@ spec:
   selector:
   # these labels are used to select pods
     matchLabels:
-      project: dotmart
+      project: roboshop
       component: catalogue
       tier: backend
   # pod defination 
   template:
     metadata:
       labels:
-        project: dotmart
+        project: roboshop
         component: catalogue
         tier: backend
     spec:
@@ -63,7 +63,7 @@ metadata:
   name: catalogue
 spec:
   selector:
-    project: dotmart
+    project: roboshop
     component: catalogue
     tier: backend
   ports:
